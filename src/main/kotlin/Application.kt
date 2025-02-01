@@ -1,6 +1,5 @@
 package com.tournament
 
-import com.tournament.services.PlayerService
 import io.ktor.server.application.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.plugins.contentnegotiation.*
@@ -11,7 +10,8 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    configureRouting(PlayerService())
+    configurePlayersRouting()
+    configureTournamentRouting()
     install(ContentNegotiation) {
         json(Json {
             prettyPrint = true

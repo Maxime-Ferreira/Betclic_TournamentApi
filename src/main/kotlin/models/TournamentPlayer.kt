@@ -6,7 +6,8 @@ import kotlinx.serialization.Serializable
 import org.bson.types.ObjectId
 
 @Serializable
-data class Player(
-    @SerialName("id") @Serializable(with = ObjectIdSerializer::class) val id: ObjectId = ObjectId.get(),
+data class TournamentPlayer(
+    @SerialName("playerId") @Serializable(with = ObjectIdSerializer::class) val playerId: ObjectId = ObjectId.get(),
     val username: String,
+    var points: Int = 0
 )

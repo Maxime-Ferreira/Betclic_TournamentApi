@@ -1,36 +1,22 @@
 package com.tournament.services
 
-import models.Player
+import com.tournament.models.Player
 import org.bson.Document
-import org.bson.types.ObjectId
-import org.litote.kmongo.*
+import org.litote.kmongo.KMongo
+import org.litote.kmongo.findOne
+import org.litote.kmongo.getCollection
 
 class PlayerService {
     private val client = KMongo.createClient("mongodb://localhost:27017")
     private val database = client.getDatabase("betclic_test")
-    private val collection = database.getCollection<Player>("players")
-
-    fun getAllPlayers(): List<Player> {
-        return collection.find().toList().sortedWith(compareByDescending { it.points })
-    }
+    private val playersCollection = database.getCollection<Player>("players")
 
     fun addPlayer(player: Player) {
-        collection.insertOne(player)
+        playersCollection.insertOne(player)
     }
 
-    fun getPlayerById(id: String): Player? {
-        val objectId = ObjectId(id)
-        val query = Document("id", objectId)
-        return collection.findOne(query)
-    }
-
-    fun updatePlayer(id: String, updatedPlayer: Player): Boolean {
-        val result = collection.replaceOneById(id, updatedPlayer)
-        return result.matchedCount > 0
-    }
-
-    fun deleteAllPlayers(): Boolean {
-        val result = collection.deleteMany("{}")
-        return result.deletedCount > 0
+    fun getUserByUsername(username: String): Player? {
+        val query = Document("username", username)
+        return playersCollection.findOne(query)
     }
 }
