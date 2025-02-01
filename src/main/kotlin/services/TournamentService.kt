@@ -1,6 +1,7 @@
 package com.tournament.services
 
 import com.mongodb.client.model.Filters
+import com.tournament.ConfigLoader
 import com.tournament.models.TournamentPlayer
 import models.Tournament
 import org.bson.Document
@@ -10,8 +11,8 @@ import org.litote.kmongo.*
 class TournamentService(
     private val playerService: PlayerService
 ) {
-    private val client = KMongo.createClient("mongodb://localhost:27017")
-    private val database = client.getDatabase("betclic_test")
+    private val client = KMongo.createClient(ConfigLoader.mongoUri)
+    private val database = client.getDatabase(ConfigLoader.mongoDbName)
     private val tournamentCollection = database.getCollection<Tournament>("tournaments")
 
     fun createTournament(name: String) {
