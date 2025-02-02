@@ -2,6 +2,7 @@ package com.tournament.services
 
 import com.mongodb.client.model.Filters
 import com.tournament.ConfigLoader
+import com.tournament.models.RankedPlayer
 import com.tournament.models.TournamentPlayer
 import models.Tournament
 import org.bson.Document
@@ -48,8 +49,19 @@ class TournamentService(
         return result.matchedCount > 0
     }
 
-    fun getRankedPlayers(tournamentId: String): List<TournamentPlayer>? {
-        return getTournamentById(tournamentId)?.players?.sortedByDescending { it.points }
+    fun getRankedPlayers(tournamentId: String): List<RankedPlayer>? {
+        val players = getTournamentById(tournamentId)?.players
+            ?.sortedByDescending { it.points }
+            ?: return null
+
+        return players.mapIndexed { index, player ->
+            RankedPlayer(
+                playerId = player.playerId,
+                username = player.username,
+                points = player.points,
+                ranking = index + 1
+            )
+        }
     }
 
     fun deleteAllPlayersFromTournament(tournamentId: String): Boolean {
