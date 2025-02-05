@@ -1,39 +1,20 @@
-# api
+This project was created to run on Linux because the bash file uses a mongodb Docker container. 
+To launch the application on Windows, you would have to modify the script to launch mongodb via a WSL or create a MongoAtlas database.
 
-This project was created using the [Ktor Project Generator](https://start.ktor.io).
+There are 2 collections :
+- players
+- tournaments
 
-Here are some useful links to get you started:
-
-- [Ktor Documentation](https://ktor.io/docs/home.html)
-- [Ktor GitHub page](https://github.com/ktorio/ktor)
-- The [Ktor Slack chat](https://app.slack.com/client/T09229ZC6/C0A974TJ9). You'll need to [request an invite](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up) to join.
-
-## Features
-
-Here's a list of features included in this project:
-
-| Name                                               | Description                                                 |
-| ----------------------------------------------------|------------------------------------------------------------- |
-| [Routing](https://start.ktor.io/p/routing-default) | Allows to define structured routes and associated handlers. |
-
-## Building & Running
-
-To build or run the project, use one of the following tasks:
-
-| Task                          | Description                                                          |
-| -------------------------------|---------------------------------------------------------------------- |
-| `./gradlew test`              | Run the tests                                                        |
-| `./gradlew build`             | Build everything                                                     |
-| `buildFatJar`                 | Build an executable JAR of the server with all dependencies included |
-| `buildImage`                  | Build the docker image to use with the fat JAR                       |
-| `publishImageToLocalRegistry` | Publish the docker image locally                                     |
-| `run`                         | Run the server                                                       |
-| `runDocker`                   | Run using the local docker image                                     |
-
-If the server starts successfully, you'll see the following output:
-
-```
-2024-12-04 14:32:45.584 [main] INFO  Application - Application started in 0.303 seconds.
-2024-12-04 14:32:45.682 [main] INFO  Application - Responding at http://0.0.0.0:8080
-```
-
+Here are the endpoints: 
+- (POST) http://localhost:8080/player
+This endpoint can create a player. Exemple body request : { "username": "xxx" }
+- (POST) http://localhost:8080/tournaments
+This endpoint can create a tournament. Exemple body request : { "name": "xxx" }
+- (POST) http://localhost:8080/tournaments/{tournamentId}/players
+This endpoint can add an existing player to a tournament. Exemple body request : { "username": "xxx" }
+- (PUT) http://localhost:8080/tournaments/{tournamentId}/players/playerId/points
+This endpoint can update a player's points in a tournament. Exemple body request : { "points": 123 }
+- (GET) http://localhost:8080/tournaments/{tournamentId}/players
+This endpoint can show you the players sorted by points and display the rank of each player.
+- (DELETE) http://localhost:8080/tournaments/{tournamentId}/players
+This endpoint can delete all players from a tournament.
