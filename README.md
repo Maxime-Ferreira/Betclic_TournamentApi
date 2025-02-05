@@ -1,4 +1,5 @@
-This project was created to run on Linux because the bash file uses a mongodb Docker container. 
+This project was created to run on Linux or on WSL if you are on Windows because the bash file uses a mongodb Docker container. It means that your Linux or WSL must have Docker installed.
+If docker is not installed, here is a process to install it : https://woshub.com/install-docker-windows-wsl2/
 To launch the application on Windows, you would have to modify the script to launch mongodb via a WSL or create a MongoAtlas database.
 
 There are 2 collections :
