@@ -23,7 +23,7 @@ class TournamentService(
 
     private fun getTournamentById(id: String): Tournament? {
         val objectId = ObjectId(id)
-        val query = Document("id", objectId)
+        val query = Document("_id", objectId)
         return tournamentCollection.findOne(query)
     }
 
@@ -34,7 +34,7 @@ class TournamentService(
         val player = TournamentPlayer(playerId = user.id, username = user.username, points = 0)
 
         val updatedTournament = tournament.copy(players = tournament.players + player)
-        val result = tournamentCollection.replaceOne(Filters.eq("id", ObjectId(tournamentId)), updatedTournament)
+        val result = tournamentCollection.replaceOne(Filters.eq("_id", ObjectId(tournamentId)), updatedTournament)
 
         return result.modifiedCount > 0
     }
@@ -45,7 +45,7 @@ class TournamentService(
             if (it.playerId.toHexString() == playerId) it.copy(points = points) else it
         }
         val updatedTournament = tournament.copy(players = updatedPlayers)
-        val result = tournamentCollection.replaceOne(Filters.eq("id", ObjectId(tournamentId)), updatedTournament)
+        val result = tournamentCollection.replaceOne(Filters.eq("_id", ObjectId(tournamentId)), updatedTournament)
         return result.matchedCount > 0
     }
 
@@ -67,7 +67,7 @@ class TournamentService(
     fun deleteAllPlayersFromTournament(tournamentId: String): Boolean {
         val tournament = getTournamentById(tournamentId) ?: return false
         val updatedTournament = tournament.copy(players = emptyList())
-        val result = tournamentCollection.replaceOne(Filters.eq("id", ObjectId(tournamentId)), updatedTournament)
+        val result = tournamentCollection.replaceOne(Filters.eq("_id", ObjectId(tournamentId)), updatedTournament)
         return result.matchedCount > 0
     }
 }
