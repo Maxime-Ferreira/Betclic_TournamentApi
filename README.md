@@ -12,7 +12,7 @@ This endpoint can create a player. Exemple body request : { "username": "xxx" }
 This endpoint can create a tournament. Exemple body request : { "name": "xxx" }
 - (POST) http://localhost:8080/tournaments/{tournamentId}/players
 This endpoint can add an existing player to a tournament. Exemple body request : { "username": "xxx" }
-- (PUT) http://localhost:8080/tournaments/{tournamentId}/players/playerId/points
+- (PUT) http://localhost:8080/tournaments/{tournamentId}/players/{playerId}/points
 This endpoint can update a player's points in a tournament. Exemple body request : { "points": 123 }
 - (GET) http://localhost:8080/tournaments/{tournamentId}/players
 This endpoint can show you the players sorted by points and display the rank of each player.
